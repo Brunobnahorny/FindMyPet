@@ -22,7 +22,7 @@ namespace findmypet
         {
             Configuration = configuration;
         }
-        
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -35,9 +35,20 @@ namespace findmypet
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<SeedingService>();
-            
+
             services.AddScoped<IDataRepository, DataRepository>();
-            
+
+            services.AddCors(options =>
+        {
+            options.AddPolicy(MyAllowSpecificOrigins,
+            builder =>
+            {
+                builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+            });
+        });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +63,8 @@ namespace findmypet
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();
 
