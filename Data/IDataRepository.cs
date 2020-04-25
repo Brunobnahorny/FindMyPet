@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using findmypet.Models;
+using FindMyPet.Models;
 
-namespace findmypet.Data
+namespace FindMyPet.Data
 {
     public interface IDataRepository
     {

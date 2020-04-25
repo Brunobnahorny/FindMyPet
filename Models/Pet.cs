@@ -1,4 +1,6 @@
-namespace findmypet.Models
+using System.Collections.Generic;
+
+namespace FindMyPet.Models
 {
     public class Pet
     {
@@ -6,19 +8,17 @@ namespace findmypet.Models
         public string Name { get; set; }
         public string Location { get; set; }
         public string PhotoExt { get; set; }
-
         public Owner Owner { get; set; }
-
+        public List<GeoLocation> LastGeoLocations { get; set; }
         public Pet()
-        {            
+        {
         }
 
         public Pet(string name, string location, string photoExt)
         {
             Name = name;
             Location = location;
-            PhotoExt = photoExt;            
+            PhotoExt = photoExt;
         }
-        
     }
 }

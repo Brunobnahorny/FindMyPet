@@ -2,10 +2,26 @@
 
 namespace findmypet.Migrations
 {
-    public partial class init : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "GeoLocations",
+                columns: table => new
+                {
+                    GeoLocationId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    accuracy = table.Column<int>(nullable: false),
+                    latitude = table.Column<string>(nullable: true),
+                    longitude = table.Column<string>(nullable: true),
+                    timeStamp = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GeoLocations", x => x.GeoLocationId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Owners",
                 columns: table => new
@@ -13,7 +29,7 @@ namespace findmypet.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
-                    Phone = table.Column<int>(nullable: false),
+                    Phone = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -51,6 +67,9 @@ namespace findmypet.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "GeoLocations");
+
             migrationBuilder.DropTable(
                 name: "Pets");
 

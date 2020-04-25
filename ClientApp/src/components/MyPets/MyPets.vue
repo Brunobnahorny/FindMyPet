@@ -18,7 +18,7 @@
           <td>{{pet.name}}</td>
           <td>{{pet.id}}</td>
           <td style="text-align: center">
-            <div ref="qrcode">{{'http://localhost:8080/FoundPet?id=' + pet.id}}</div>
+            <div @click="downloadImg" ref="qrcode">{{'http://localhost:8080/FoundPet?id=' + pet.id}}</div>
             <br />
             <div>{{'http://localhost:8080/#/FoundPet/' + pet.id}}</div>
           </td>
@@ -52,7 +52,7 @@ export default {
   data() {
     return {
       logged: true,
-      location: '',
+      location: "",
       userPets: [
         {
           id: "00001",
@@ -96,6 +96,12 @@ export default {
     getImgUrl(pic) {
       return require("../../assets/Dogs/" + pic);
     },
+    downloadImg(e) {
+      var wind = window.open("_blank");
+      wind.document.open(e.target.src);
+
+      console.log(e.target.src);
+    }
   }
 };
 </script>

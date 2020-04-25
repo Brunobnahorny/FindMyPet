@@ -1,36 +1,43 @@
 <template>
   <div>
-      <svg class="navbar" :width="this.screenX">
-        <defs>
-          <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#4784cd;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#bbe2f6;stop-opacity:1" />
-          </linearGradient>
-        </defs>
-        <path
-          :d="'M0 0 L0 60 q' + this.screenX/2 + ' 60 ' + this.screenX +
+    <svg class="navbar" :width="this.screenX">
+      <defs>
+        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#4784cd;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#bbe2f6;stop-opacity:1" />
+        </linearGradient>
+      </defs>
+      <path
+        :d="'M0 0 L0 60 q' + this.screenX/2 + ' 60 ' + this.screenX +
          ' 0  L' + this.screenX + ' 0 Z'"
-          fill="url(#grad1)"
-        />
-      </svg>
-      <img id="logo" class="logo" alt="findmypet logo" src="../../assets/logo.svg" />
-      <p class="txtlogo" id="txtlogo">FindMyPet</p>
-      <div>
-        <nav>
-          <ul>
-            <li style="float: left; margin-left: 10%">
-              <router-link to="/" as="a"><span>Home</span></router-link>
-            </li>
-            <li>
-              <router-link to="/MyPets" as="a"><span>MyPets</span></router-link>
-            </li>
-          
-            <li style="float: right; margin-right: 10%">
-              <router-link to="/FoundAPet" as="a"><span>Found a pet</span></router-link>
-            </li>
-            </ul>
-        </nav>
-      </div>
+        fill="url(#grad1)"
+      />
+    </svg>
+    <img id="logo" class="logo" alt="findmypet logo" src="../../assets/logo.svg" />
+
+    <p class="txtlogo" id="txtlogo">FindMyPet</p>
+    <div>
+      <nav>
+        <ul>
+          <li style="float: left; margin-left: 10%">
+            <router-link to="/" as="a">
+              <span>Home</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link to="/MyPets" as="a">
+              <span>MyPets</span>
+            </router-link>
+          </li>
+
+          <li style="float: right; margin-right: 10%">
+            <router-link to="/FoundAPet" as="a">
+              <span>Found a pet</span>
+            </router-link>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </template>
 
@@ -48,8 +55,10 @@ export default {
       });
       setTimeout(() => {
         document.getElementById("logo").style.width = "96px";
-        document.getElementById("txtlogo").style.visibility = "visible";
       }, 2000);
+      setTimeout(() => {
+        document.getElementById("txtlogo").style.visibility = "visible";
+      }, 3000);
     });
   },
   beforeDestroy() {
@@ -59,7 +68,6 @@ export default {
 </script>
 
 <style scoped>
-
 .logo {
   position: absolute;
   margin: auto;
@@ -104,8 +112,8 @@ nav li a {
   height: 90px;
 }
 nav li a span {
-    display: table-cell;
-    vertical-align: bottom;
+  display: table-cell;
+  vertical-align: bottom;
 }
 nav li a:hover {
   background-color: var(--cor-p1-sec);

@@ -1,9 +1,9 @@
 using System.Linq;
 using System.Threading.Tasks;
-using findmypet.Models;
+using FindMyPet.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace findmypet.Data
+namespace FindMyPet.Data
 {
     public class DataRepository : IDataRepository
     {

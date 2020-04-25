@@ -4,14 +4,16 @@ using FindMyPet.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace findmypet.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200425215114_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,9 +28,6 @@ namespace findmypet.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("PetId")
-                        .HasColumnType("int");
-
                     b.Property<int>("accuracy")
                         .HasColumnType("int");
 
@@ -42,8 +41,6 @@ namespace findmypet.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("GeoLocationId");
-
-                    b.HasIndex("PetId");
 
                     b.ToTable("GeoLocations");
                 });
@@ -93,13 +90,6 @@ namespace findmypet.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Pets");
-                });
-
-            modelBuilder.Entity("FindMyPet.Models.GeoLocation", b =>
-                {
-                    b.HasOne("FindMyPet.Models.Pet", "Pet")
-                        .WithMany("LastGeoLocations")
-                        .HasForeignKey("PetId");
                 });
 
             modelBuilder.Entity("FindMyPet.Models.Pet", b =>

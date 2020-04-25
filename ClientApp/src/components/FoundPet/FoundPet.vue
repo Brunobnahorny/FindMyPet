@@ -15,7 +15,8 @@
         <td>{{userPet.name}}</td>
         <td>{{userPet.id}}</td>
         <td style="width:400px; text-align: center">
-          <iframe 
+          <iframe
+            v-if="userlocation"
             :src="'https://maps.google.com/maps?q='+userlocation.coords.latitude+','+userlocation.coords.longitude+'&hl=pt-br&z=14&amp;output=embed'"
             width="380"
             height="200"
@@ -26,7 +27,9 @@
             tabindex="0"
           ></iframe>
           <br />
-          <small class="txt-center">{{userlocation.coords.latitude+','+userlocation.coords.longitude}}</small>
+          <small
+            class="txt-center"
+          >{{userlocation.coords.latitude+','+userlocation.coords.longitude}}</small>
         </td>
       </tr>
     </table>
@@ -44,19 +47,17 @@
 export default {
   data() {
     return {
-      userlocation: '',
-      userPet: 
-        {
-          id: "00001",
-          name: "Johnnie Piazza",
-          photo: "00001.jpeg",
-          owner: {
-              name: 'Bruno Bee Nahorny',
-              phone: '48 99999-3333',
-              email: 'bruno.nahorny@gmail.com'
-          }
+      userlocation: "",
+      userPet: {
+        id: "00001",
+        name: "Johnnie Piazza",
+        photo: "00001.jpeg",
+        owner: {
+          name: "Bruno Bee Nahorny",
+          phone: "48 99999-3333",
+          email: "bruno.nahorny@gmail.com"
         }
-      
+      }
     };
   },
   created() {
@@ -68,7 +69,7 @@ export default {
     },
     getImgUrl(pic) {
       return require("../../assets/Dogs/" + pic);
-    },
+    }
   }
 };
 </script>
@@ -84,7 +85,8 @@ table {
 }
 
 th,
-td, dd {
+td,
+dd {
   text-align: left;
   font-size: 16px;
   padding: 10px;
@@ -97,7 +99,8 @@ td img {
   margin: 0;
 }
 
-th, dl{
+th,
+dl {
   background-color: var(--cor-p1-pri);
   color: white;
 }

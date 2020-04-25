@@ -8,8 +8,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "core-js": "^3.6.4",
+    "core-js": "^3.6.5",
     "easyqrcodejs": "^3.5.2",
+    "gsap": "^3.2.6",
     "vue": "^2.6.11",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.1.6"

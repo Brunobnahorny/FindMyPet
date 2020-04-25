@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace findmypet.Models
+namespace FindMyPet.Models
 {
     public class Owner
     {
@@ -12,14 +12,14 @@ namespace findmypet.Models
         public List<Pet> Pets { get; set; }
 
         public Owner()
-        {            
+        {
         }
 
         public Owner(string name, string phone, string email)
         {
             Name = name;
             Phone = phone;
-            Email = email;            
+            Email = email;
         }
     }
 }

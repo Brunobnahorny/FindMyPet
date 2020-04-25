@@ -1,11 +1,11 @@
 
 using System.Threading.Tasks;
-using findmypet.Data;
-using findmypet.Models;
+using FindMyPet.Data;
+using FindMyPet.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace findmypet.Controllers
+namespace FindMyPet.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
