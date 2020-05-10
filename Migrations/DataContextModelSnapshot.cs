@@ -26,19 +26,19 @@ namespace findmypet.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Accuracy")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Latitude")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Longitude")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("PetId")
                         .HasColumnType("int");
 
-                    b.Property<int>("accuracy")
-                        .HasColumnType("int");
-
-                    b.Property<string>("latitude")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("longitude")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("timeStamp")
+                    b.Property<string>("TimeStamp")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("GeoLocationId");
@@ -50,7 +50,7 @@ namespace findmypet.Migrations
 
             modelBuilder.Entity("FindMyPet.Models.Owner", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("OwnerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -58,13 +58,13 @@ namespace findmypet.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("OwnerName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("OwnerId");
 
                     b.ToTable("Owners");
                 });
@@ -76,14 +76,11 @@ namespace findmypet.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("OwnerId")
                         .HasColumnType("int");
+
+                    b.Property<string>("PetName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhotoExt")
                         .HasColumnType("nvarchar(max)");

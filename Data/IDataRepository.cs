@@ -16,6 +16,6 @@ namespace FindMyPet.Data
 
         //Pets
         Task<Pet[]> GetAllPetsAsync();
-        Task<Pet> GetPetByIdAsync(int PetId);
+        Task<Pet> GetPetByIdAsync(int PetId, bool ownerJoin = true);
     }
 }

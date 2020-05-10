@@ -1,23 +1,24 @@
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace FindMyPet.Models
 {
     public class Owner
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int OwnerId { get; set; }
+        public string OwnerName { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-
-        public List<Pet> Pets { get; set; }
+        
+        public ICollection<Pet> Pets { get; set; } = new List<Pet>();
 
         public Owner()
         {
         }
 
-        public Owner(string name, string phone, string email)
+        public Owner(string ownerName, string phone, string email)
         {
-            Name = name;
+            OwnerName = ownerName;
             Phone = phone;
             Email = email;
         }

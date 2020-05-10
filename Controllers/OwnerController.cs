@@ -55,7 +55,7 @@ namespace FindMyPet.Controllers
                 _data.Add(model);
                 if (await _data.SaveChangesAsync())
                 {
-                    return Created($"/{model.Id}", model);
+                    return Created($"/{model.OwnerId}", model);
                 }
             }
             catch (System.Exception)
@@ -78,7 +78,7 @@ namespace FindMyPet.Controllers
 
                 if (await _data.SaveChangesAsync())
                 {
-                    return Created($"/OwnerDetails/{model.Id}", model);
+                    return Created($"/OwnerDetails/{model.OwnerId}", model);
                 }
             }
             catch (System.Exception)

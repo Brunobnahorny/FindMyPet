@@ -1,80 +1,133 @@
 <template>
-  <div class="content">
+  <div class="content" style="overflow: scroll">
     <h1>Did you find this one?</h1>
-    <table>
-      <tr>
-        <th>Photo:</th>
-        <th>Name:</th>
-        <th>ID:</th>
-        <th>Last Seen:</th>
-      </tr>
-      <tr v-if="userlocation">
-        <td style="padding: 0; width: 150px">
-          <img :src="getImgUrl(userPet.photo)" width="150px" height="150px" />
-        </td>
-        <td>{{userPet.name}}</td>
-        <td>{{userPet.id}}</td>
-        <td style="width:400px; text-align: center">
-          <iframe
-            v-if="userlocation"
-            :src="'https://maps.google.com/maps?q='+userlocation.coords.latitude+','+userlocation.coords.longitude+'&hl=pt-br&z=14&amp;output=embed'"
-            width="380"
-            height="200"
-            frameborder="0"
-            style="border:0;"
-            allowfullscreen
-            aria-hidden="false"
-            tabindex="0"
-          ></iframe>
-          <br />
-          <small
-            class="txt-center"
-          >{{userlocation.coords.latitude+','+userlocation.coords.longitude}}</small>
-        </td>
-      </tr>
-    </table>
-    <h1>Give the owner a call</h1>
-    <dl>Name:</dl>
-    <dd>{{userPet.owner.name}}</dd>
-    <dl>Phone:</dl>
-    <dd>{{userPet.owner.phone}}</dd>
-    <dl>Email:</dl>
-    <dd>{{userPet.owner.email}}</dd>
+    <transition name="slide-fade" mode="out-in">
+      <table>
+        <tr>
+          <th>Photo:</th>
+          <th>Name:</th>
+          <th>ID:</th>
+          <th>Last Seen:</th>
+        </tr>
+        <tr v-if="!loading">
+          <td style="padding: 0; width: 150px">
+            <img :src="getImgUrl(pet.petId + pet.photoExt)" width="150px" height="150px" />
+          </td>
+          <td>{{pet.petName}}</td>
+          <td>{{pet.petId}}</td>
+          <td style="width:400px; text-align: center">
+            <iframe
+              v-if="userlocation"
+              :src="'https://maps.google.com/maps?q='+userlocation.coords.latitude+','+userlocation.coords.longitude+'&hl=pt-br&z=14&amp;output=embed'"
+              width="380"
+              height="200"
+              frameborder="0"
+              style="border:0;"
+              allowfullscreen
+              aria-hidden="false"
+              tabindex="0"
+            ></iframe>
+            <br />
+            <small
+              class="txt-center"
+            >{{userlocation.coords.latitude+','+userlocation.coords.longitude}} - {{userlocation.coords.accuracy}}</small>
+          </td>
+        </tr>
+      </table>
+    </transition>
+    <div v-if="!loading">
+      <h1>Give the owner a call</h1>
+      <dl>Name:</dl>
+      <dd>{{pet.owner.ownerName}}</dd>
+      <dl>Phone:</dl>
+      <dd>{{pet.owner.phone}}</dd>
+      <dl>Email:</dl>
+      <dd>{{pet.owner.email}}</dd>
+    </div>
+    <div class="locationdiv" v-if="!userlocation">
+      <h2>
+        Please, activate location to help this pet find its owner/best-friend!
+        <img
+          src="../../assets/location.svg"
+        />
+      </h2>
+    </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
+      loading: true,
       userlocation: "",
-      userPet: {
-        id: "00001",
-        name: "Johnnie Piazza",
-        photo: "00001.jpeg",
-        owner: {
-          name: "Bruno Bee Nahorny",
-          phone: "48 99999-3333",
-          email: "bruno.nahorny@gmail.com"
-        }
-      }
+      pet: {},
+      pet_id: this.$route.params.pet_id
     };
   },
   created() {
+    this.loading = true;
     navigator.geolocation.getCurrentPosition(this.setlocation);
+    var _pet_id = this.$route.params.pet_id ? this.$route.params.pet_id : 1;
+    axios
+      .get("http://localhost:5000/api/Pet/" + _pet_id)
+      .then(response => {
+        if (response) {
+          this.pet = response.data;
+          this.loading = false;
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  },
+  watch: {
+    loading() {
+      setTimeout(this.saveLocation(), 2000);
+    }
   },
   methods: {
     setlocation(position) {
       this.userlocation = position;
     },
     getImgUrl(pic) {
-      return require("../../assets/Dogs/" + pic);
+      return require("../../../public/petphotos/" + pic);
+    },
+    saveLocation() {
+      if (this.userlocation) {
+        var saveloc = {
+          accuracy: this.userlocation.coords.accuracy,
+          latitude: this.userlocation.coords.latitude,
+          longitude: this.userlocation.coords.longitude,
+          timeStamp: this.userlocation.timestamp
+        };
+        axios
+          .post("http://localhost:5000/api/FoundPet/" + this.pet_id, saveloc)
+          .catch(res => console.log(res));
+      }
     }
   }
 };
 </script>
 
 <style scoped>
+.locationdiv {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+h2 img {
+  z-index: -1;
+  position: relative;
+  display: block;
+  left: 5%;
+  top: -60px;
+  width: 120px;
+  filter: invert(0.5) sepia(1) saturate(2) hue-rotate(330deg);
+  opacity: 0.9;
+}
 table {
   border-collapse: collapse;
   background-image: linear-gradient(to top, white, transparent);

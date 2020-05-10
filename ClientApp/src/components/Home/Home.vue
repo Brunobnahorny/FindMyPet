@@ -1,29 +1,62 @@
 <template>
-    <div>
-        <div class="content"><h1> Welcome</h1>
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur corrupti, vel asperiores laboriosam aspernatur laudantium doloremque distinctio nam! Maiores molestiae cum reiciendis, at nulla vero possimus distinctio inventore perspiciatis blanditiis.</p>
+    <div class="content">
+        <h1> Hi <img class="icon" src="../../assets/paws.png"> friends!</h1><img v-if="screenW > 700" class="johnnie" src="../../assets/johnny.jpeg" align="right">
 
+        <Carrousel :textos="slides" />
+         
     
-    
-    <p><img src="../../assets/johnny.jpeg" width="300px" height="300px" align="right">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur corrupti, vel asperiores laboriosam aspernatur laudantium doloremque distinctio nam! Maiores molestiae cum reiciendis, at nulla vero possimus distinctio inventore perspiciatis blanditiis.
-         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur corrupti, vel asperiores laboriosam aspernatur laudantium doloremque distinctio nam! Maiores molestiae cum reiciendis, at nulla vero possimus distinctio inventore perspiciatis blanditiis.</p>
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur corrupti, vel asperiores laboriosam aspernatur laudantium doloremque distinctio nam! Maiores molestiae cum reiciendis, at nulla vero possimus distinctio inventore perspiciatis blanditiis.</p>
-    
-    </div>
-
+    <p>Tag your pets with QRCodes and whenever someone scan it, you are automatic notified, with their location. The person whom scanned will have acess to your given information, for easy contacting.</p>
+    <h2>  Give your little ones the care they already gave to you.</h2>
     </div>
 </template>
 
 <script>
-    export default {
-        
+import Carrousel from "../../components/_shared/_carrousel";
+export default {
+    components: {
+        Carrousel
+    },
+    data(){
+        return {
+            screenW: innerWidth,
+            slides: [
+                {
+                    text: 'We are here to provide a way of tracking your pets with technology!',
+                    id: 1
+                },
+                {
+                    text: 'We are here to make best friends reunite again!',
+                    id: 2
+                },
+                {
+                    text: 'We are here for you!',
+                    id: 3
+                }
+            ]         
+        }
     }
+}
 </script>
 
 <style scoped>
-img {
-    border-radius: 16px;
-  box-shadow: 0 15px 20px black;
+p {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 32px;
+    margin: 16px 0 24px;
+    padding-right: 23%;
+    text-indent: 3em;
 }
-
+.icon{
+    width: 30px;
+    margin: 0;
+}
+.johnnie {
+    border-radius: 16px;
+    box-shadow: 0 15px 20px black;
+    position: absolute;
+    z-index: 2;
+    right: 5%;
+    width: 20%;
+}
 </style>

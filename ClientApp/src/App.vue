@@ -63,7 +63,7 @@ body {
   display: block;
   padding: 24px 46px;
   height: 100%;
-  overflow: scroll;
+  overflow: hidden;
 }
 .content img {
   object-fit: cover;

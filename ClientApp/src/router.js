@@ -20,6 +20,11 @@ export default new Router({
       component: MyPets,
     },
     {
+      path: "/MyPets/:owner_id",
+      nome: "MyPets",
+      component: MyPets,
+    },
+    {
       path: "/FoundAPet",
       nome: "FoundAPet",
       component: FoundAPet,
@@ -33,6 +38,6 @@ export default new Router({
       path: "/FoundPet/:pet_id",
       nome: "FoundPet",
       component: FoundPet,
-    }
+    },
   ],
 });

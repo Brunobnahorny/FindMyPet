@@ -19,7 +19,7 @@
     <div>
       <nav>
         <ul>
-          <li style="float: left; margin-left: 10%">
+          <li style="float: left; margin-left: 5%">
             <router-link to="/" as="a">
               <span>Home</span>
             </router-link>
@@ -30,7 +30,7 @@
             </router-link>
           </li>
 
-          <li style="float: right; margin-right: 10%">
+          <li style="float: right; margin-right: 5%">
             <router-link to="/FoundAPet" as="a">
               <span>Found a pet</span>
             </router-link>
@@ -90,7 +90,7 @@ nav {
   position: relative;
   top: 15px;
   margin: auto;
-  z-index: 1;
+  z-index: 1;;
 }
 nav ul {
   list-style-type: none;
@@ -98,7 +98,7 @@ nav ul {
   padding: 0;
 }
 nav li {
-  display: inline;
+  display: inline-block;
 }
 nav li a {
   display: inline-table;
@@ -110,6 +110,7 @@ nav li a {
   color: var(--cor-p1-cla);
   border-radius: 15px;
   height: 90px;
+  
 }
 nav li a span {
   display: table-cell;

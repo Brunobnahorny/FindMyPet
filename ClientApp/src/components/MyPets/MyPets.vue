@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content" style="overflow: scroll">
     <Login v-if="!this.logged" />
     <div v-else>
       <h1>Your Pets</h1>
@@ -11,20 +11,20 @@
           <th>QrCode:</th>
           <th>Last Seen:</th>
         </tr>
-        <tr v-for="(pet, index) in userPets" :key="index">
+        <tr v-for="(pet, index) in user.pets" :key="index">
           <td style="padding: 0; width: 150px">
-            <img :src="getImgUrl(pet.photo)" width="150px" height="150px" />
+            <img :src="getImgUrl(pet.petId + pet.photoExt)" width="150px" height="150px" />
           </td>
-          <td>{{pet.name}}</td>
-          <td>{{pet.id}}</td>
+          <td>{{pet.petName}}</td>
+          <td>{{pet.petId}}</td>
           <td style="text-align: center">
-            <div @click="downloadImg" ref="qrcode">{{'http://localhost:8080/FoundPet?id=' + pet.id}}</div>
+            <qrcode :qrcode="'http://localhost:8080/FoundPet?id=' + pet.petId"/>
             <br />
-            <div>{{'http://localhost:8080/#/FoundPet/' + pet.id}}</div>
+            <div>{{'http://localhost:8080/#/FoundPet/' + pet.petId}}</div> 
           </td>
           <td style="width:400px; text-align: center">
             <iframe
-              :src="'https://maps.google.com/maps?q=\''+pet.location+'&hl=pt-br&z=14&amp;output=embed'"
+              :src="'https://maps.google.com/maps?q='+pet.lastGeoLocations[0].latitude+','+pet.lastGeoLocations[0].longitude+'&hl=pt-br&z=14&amp;output=embed'"
               width="380"
               height="200"
               frameborder="0"
@@ -34,7 +34,9 @@
               tabindex="0"
             ></iframe>
             <br />
-            <small class="txt-center">{{pet.location}}</small>
+            <small
+              class="txt-center"
+            >{{pet.lastGeoLocations[0].latitude+','+pet.lastGeoLocations[0].longitude}}</small>
           </td>
         </tr>
       </table>
@@ -44,64 +46,37 @@
 
 <script>
 import Login from "../Login/Login.vue";
-import * as QRCode from "easyqrcodejs";
+import axios from 'axios';
+import qrcode from "../_shared/_qrcode";
+
 export default {
   components: {
-    Login
+    Login,
+    qrcode
   },
   data() {
     return {
       logged: true,
       location: "",
-      userPets: [
-        {
-          id: "00001",
-          name: "Johnnie Piazza",
-          location:
-            "Rua Professor Bento Águido Vieira, 144 - Trindade - Florianópolis",
-          photo: "00001.jpeg"
-        },
-        {
-          id: "00002",
-          name: "Jabé domal",
-          location:
-            "Rua Professor Bento Águido Vieira, 144 - Trindade - Florianópolis",
-          photo: "00002.png"
-        },
-        {
-          id: "00003",
-          name: "Jabba Hut",
-          location: "Rua Delminda Silveira, 144 - Trindade - Florianópolis",
-          photo: "00003.png"
-        }
-      ]
+      user: []
     };
   },
-  mounted() {
-    this.$refs.qrcode.forEach(e => {
-      var content = e.innerHTML;
-      e.innerHTML = "";
-      new QRCode(e, {
-        text: content,
-        width: 190,
-        height: 190,
-        logo: require("../../assets/logo.svg"),
-        logoWidth: 91,
-        logoHeight: 120,
-        logoBackgroundTransparent: true
-      });
+  created() {
+    var owner_id = this.$route.params.owner_id ? this.$route.params.owner_id : 1;
+    axios.get('http://localhost:5000/api/Owner/' + owner_id)
+    .then(response => {
+      if (response) {
+        this.user = response.data;
+      }
+    })
+    .catch(error => {
+      console.log(error);
     });
   },
   methods: {
     getImgUrl(pic) {
-      return require("../../assets/Dogs/" + pic);
+      return require("../../../public/petphotos/" + pic);
     },
-    downloadImg(e) {
-      var wind = window.open("_blank");
-      wind.document.open(e.target.src);
-
-      console.log(e.target.src);
-    }
   }
 };
 </script>
